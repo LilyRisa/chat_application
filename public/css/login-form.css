@@ -13,11 +13,12 @@ body#regis{ background-image:url("https://hdwallsource.com/img/2014/9/blur-26347
   line-height: 50px;
 }
 .main-div {
-  background: #ffffff none repeat scroll 0 0;
+  background: #ffffff82 none repeat scroll 0 0;
   border-radius: 2px;
   margin: 10px auto 30px;
   max-width: 38%;
   padding: 50px 70px 70px 71px;
+  border-radius: 25px;
 }
 
 .login-form .form-group {
@@ -30,8 +31,8 @@ body#regis{ background-image:url("https://hdwallsource.com/img/2014/9/blur-26347
   text-decoration: underline;
 }
 .login-form  .btn.btn-primary {
-  background: #f0ad4e none repeat scroll 0 0;
-  border-color: #f0ad4e;
+  background: #000000 none repeat scroll 0 0;
+  border-color: #ffffff;
   color: #ffffff;
   font-size: 14px;
   width: 100%;

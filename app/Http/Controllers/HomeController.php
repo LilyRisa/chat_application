@@ -14,7 +14,7 @@ class HomeController extends Controller
 
 	public function getHome(){
 		if (Auth::check()) {
-    		return view('homechat');
+    		return view('homepage');
 		}else{
 			return redirect()->route('login');
 		}
@@ -22,9 +22,9 @@ class HomeController extends Controller
 	}
 	public function login(){
 		if (Auth::check()) {
-    		return redirect()->route('homechat');
+    		return redirect()->route('home');
 		}else{
-			return redirect()->route('login');
+			return view('login');
 		}
 	}
 	public function postLogin(Request $request){
@@ -60,6 +60,10 @@ class HomeController extends Controller
 		}
 
 		
+	}
+	public function logout(){
+		Auth::logout();
+		return redirect()->route('login');
 	}
     
 }

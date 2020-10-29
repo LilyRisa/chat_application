@@ -1,6 +1,9 @@
 @extends('layout.layout')
+@section('back')
+	@include('layout.back')
+@endsection
 	@section('body')
-		<div class="container-fluid h-100">
+		<div class="container-fluid">
 			<div class="row justify-content-center h-100">
 				<div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
 					<div class="card-header">
@@ -183,22 +186,6 @@
 					</div>
 				</div>
 				
-				</div>
-				<div class="row">
-					<div class="col-md-2"></div>
-					<div class="col-md-8 col-xl-8 chat">
-					<div class="row h-100 justify-content-md-center align-items-center">
-						<div class="col-md-4 col-xl-4">
-							<div class="button ft ftactive"><span>Chat private</span></div>
-						</div>
-						<div class="col-md-4 col-xl-4">
-							<div class="button ft"><span>Chat public</span></div>
-						</div>
-						<div class="col-md-4 col-xl-4">
-							<div class="button ft"><span>Profile</span></div>
-						</div>
-					</div>
-			</div>
 				</div>
 				
 		</div>

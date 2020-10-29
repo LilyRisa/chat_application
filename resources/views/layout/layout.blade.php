@@ -13,9 +13,12 @@
 		<script src="{{asset('js/bootstrap.min.js')}}"></script>
 		<script src="{{asset('js/jquery.min.js')}}"></script>
 		<script src="{{asset('js/notify.min.js')}}"></script>
+		<script src="{{asset('js/bootstrap-notify.min.js')}}"></script>
 		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+		@yield('head_style')
 	</head>
 	<body>
+		@yield('back')
 		@yield('body')
 	</body>
 </html>

@@ -69,7 +69,7 @@ Register
 
 $(document).ready(function(){
     $('#register').hide();
-    $('body').attr('id','LoginForm');
+   // $('body').attr('id','LoginForm');
 
 });
 $('#switch').on('click',function(){
@@ -120,7 +120,7 @@ var form_value = [];
                 type: 'success',
                 timer: 3000
             });
-            location.reload();
+            setTimeout(function(){ location.reload();},5000);
             }else{
                 $.notify({
                   icon: 'pe-7s-gift',
@@ -176,11 +176,11 @@ $("#Login").submit(function(e) {
                 type: 'success',
                 timer: 3000
             });
-            location.reload();
+            setTimeout(function(){ location.reload(); },5000);
             }else{
                 $.notify({
                   icon: 'pe-7s-gift',
-                  message: "Đăng nhập lỗi"
+                  message: "Đăng nhập lỗi hoặc sai thông tin"
 
                   },{
                 type: 'danger',
