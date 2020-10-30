@@ -32,4 +32,7 @@ Route::middleware(['checkuser'])->group(function(){
        Route::get('/search', ['as' => 'getsearch', 'uses' => 'UsersController@index']);
        Route::post('/search_users', ['as' => 'postsearch', 'uses' => 'UsersController@search']);
 
+
+    	Route::get('/messages', ['as' => 'fetchMessages', 'uses' => 'RoomController@fetchMessages']);
+		Route::post('/messages', ['as' => 'sendMessage', 'uses' => 'RoomController@sendMessage']);
 });

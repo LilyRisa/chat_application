@@ -100,7 +100,7 @@ var form_value = [];
             console.log(form_value);
         });
         $.ajax({
-            url: '/reg',
+            url: '{{route('reg')}}',
             type: 'post',
             data : {
                 "_token": "{{ csrf_token() }}",
@@ -158,7 +158,7 @@ $("#Login").submit(function(e) {
             console.log(form_value);
         });
         $.ajax({
-            url: '/login',
+            url: '{{route('postlogin')}}',
             type: 'post',
             data : {
                 "_token": "{{ csrf_token() }}",

@@ -27,6 +27,9 @@
 <script>
 	$('#search-bar').on('keyup',function(){
 		$('.gradient-list').html('');
+		// $('#search-bar').on('change',function(){
+		// 	$('.gradient-list').html('');
+		// });
 		var keywords = $(this).val();
 		$.ajax({
 			url: '{{route('postsearch')}}',
@@ -36,6 +39,7 @@
 				keywords: keywords
 			}
 		}).done((result)=>{
+			$('.gradient-list').html('');
 			console.log(result);
 			$.each(result, (i,v)=>{
 				$('.gradient-list').append(`<li>name: ${v.name} | email: ${v.email} | description: ${v.description}</li>`);

@@ -15,6 +15,7 @@
 		<script src="{{asset('js/notify.min.js')}}"></script>
 		<script src="{{asset('js/bootstrap-notify.min.js')}}"></script>
 		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+		<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 		@yield('head_style')
 	</head>
 	<body>
