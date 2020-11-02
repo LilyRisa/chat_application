@@ -74,6 +74,9 @@ Vagrant.configure("2") do |config|
   #   yum install mariadb-server mariadb -y
   #   systemctl start mariadb
   # SHELL
+  config.vm.provider "virtualbox" do |v|
+    v.customize ["setextradata", :id, "VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]
+end
 	config.vm.provision "shell",
     		inline: "chmod 777 /var/www/html"
 	config.vm.provision "shell",

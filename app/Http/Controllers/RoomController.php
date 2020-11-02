@@ -37,7 +37,7 @@ class RoomController extends Controller
         'message' => $request->input('message')
       ]);
 
-      broadcast(new Demo($request->input('message')))->toOthers();
+      broadcast(new MyEvent($user, $message))->toOthers();
 
       return ['status' => 'Message Sent!', 'data' => $message];
     }

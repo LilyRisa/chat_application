@@ -22,7 +22,7 @@
 
         methods: {
             sendMessage() {
-                this.$emit('messagesent', {
+                this.$emit('MyEvent', {
                     user: this.user,
                     message: this.newMessage
                 });

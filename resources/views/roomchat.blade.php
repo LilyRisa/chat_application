@@ -33,12 +33,13 @@
 								</ul>
 							</div>
 						</div>
+						<div id="app">
 						<div class="card-body msg_card_body" id="mess">
-							
+							<chat-messages :messages="messages" :user="{{ Auth::user() }}"></chat-messages>
 							
 						</div>
 						<div class="card-footer">
-							<div class="input-group">
+							{{-- <div class="input-group">
 						        <div class="input-group-append">
 						            <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
 						        </div>
@@ -46,7 +47,12 @@
 						        <div class="input-group-append">
 						            <button class="input-group-text send_btn" onclick="sendMessage()"><i class="fas fa-location-arrow"></i></button>
 						        </div>
-						    </div>
+						    </div> --}}
+						    <chat-form
+                        v-on:messagesent="addMessage"
+                        :user="{{ Auth::user() }}"
+                    ></chat-form>
+						</div>
 						</div>
 					</div>
 				</div>
@@ -56,106 +62,106 @@
 		</div>
 
 		<script>
-	$(document).ready(function(){
-		loadmess({{ $user->id }});
+	//$(document).ready(function(){
+	// 	loadmess({{ $user->id }});
 		
-		$('#action_menu_btn').click(function(){
-			$('.action_menu').toggle();
-		});
+	// 	$('#action_menu_btn').click(function(){
+	// 		$('.action_menu').toggle();
+	// 	});
 		
-		function loadmess(user_id){
+	// 	function loadmess(user_id){
 			
-			$.ajax({
-				url : '{{route('fetchMessages')}}',
-				type : 'get',
-			}).done(result => {
-				//console.log(result);
-				$.each(result, (i,v)=>{
-					if(v.user.id != user_id){
-						var temp = `<div class="d-flex justify-content-start mb-4">
-										<div class="img_cont_msg" title="${v.user.name}">
-											<img src="${v.user.avatar}" class="rounded-circle user_img_msg" alt="${v.user.name}">
+	// 		$.ajax({
+	// 			url : '{{route('fetchMessages')}}',
+	// 			type : 'get',
+	// 		}).done(result => {
+	// 			//console.log(result);
+	// 			$.each(result, (i,v)=>{
+	// 				if(v.user.id != user_id){
+	// 					var temp = `<div class="d-flex justify-content-start mb-4">
+	// 									<div class="img_cont_msg" title="${v.user.name}">
+	// 										<img src="${v.user.avatar}" class="rounded-circle user_img_msg" alt="${v.user.name}">
 											
-										</div>
-										<div class="msg_cotainer">
-											${v.message}
-											<span class="msg_time">${v.created_at}</span>
-										</div>
-									</div>`;
-						$('#mess').append(temp);
-					}else{
-						var temp = `
-						<div class="d-flex justify-content-end mb-4">
-								<div class="msg_cotainer_send" title="${v.user.name}">
-									${v.message}
-									<span class="msg_time_send">${v.created_at}</span>
-								</div>
-								<div class="img_cont_msg">
-							<img src="${v.user.avatar}" class="rounded-circle user_img_msg">
-								</div>
-							</div>`;
-						$('#mess').append(temp);
-					}
-				})
-			});
-		}
-	});
-	$("input[name*='message']").keyup(function(e){
-		if(e.key==="Enter"){
-			e.preventDefault();
-			sendMessage();
-		}
-	});
-	function sendMessage(){
-		$.ajax({
-			url:'{{route('sendMessage')}}',
-			type: 'post',
-			data:{
-				"_token": "{{ csrf_token() }}",
-				"message" : $("input[name*='message']").val(),
-			}
-		}).done(result => {
-			//console.log(result);
-			$("input[name*='message']").val('');
-			var temp = `
-						<div class="d-flex justify-content-end mb-4">
-								<div class="msg_cotainer_send" title="{{$user->name}}">
-									${result.data.message}
-									<span class="msg_time_send">${result.data.created_at}</span>
-								</div>
-								<div class="img_cont_msg">
-							<img src="{{$user->avatar}}" class="rounded-circle user_img_msg">
-								</div>
-							</div>`;
-			$('#mess').append(temp);
-		});
-	}
-	var pusher = new Pusher("{{env('PUSHER_APP_KEY')}}", {
-		  auth: {
-		    params: {
-		      'X-CSRF-Token': '{{csrf_token()}}'
-		    }
-		  },
-		  cluster: '{{env('PUSHER_APP_CLUSTER')}}',
-			encrypted: true
-		  // authEndpoint: 'broadcasting/auth',
-		});
-		Pusher.logToConsole = true;
-		var channel = pusher.subscribe('publicmess');
-		console.log(channel);
-		channel.bind('App\\Events\\Demo', function(data) {
-        	var temp = `
-						<div class="d-flex justify-content-start mb-4">
-								<div class="msg_cotainer_send" title="{{$user->name}}">
-									${datamessage}
-									<span class="msg_time_send"></span>
-								</div>
-								<div class="img_cont_msg">
-							<img src="{{$user->avatar}}" class="rounded-circle user_img_msg">
-								</div>
-							</div>`;
-			$('#mess').append(temp);
-    });
+	// 									</div>
+	// 									<div class="msg_cotainer">
+	// 										${v.message}
+	// 										<span class="msg_time">${v.created_at}</span>
+	// 									</div>
+	// 								</div>`;
+	// 					$('#mess').append(temp);
+	// 				}else{
+	// 					var temp = `
+	// 					<div class="d-flex justify-content-end mb-4">
+	// 							<div class="msg_cotainer_send" title="${v.user.name}">
+	// 								${v.message}
+	// 								<span class="msg_time_send">${v.created_at}</span>
+	// 							</div>
+	// 							<div class="img_cont_msg">
+	// 						<img src="${v.user.avatar}" class="rounded-circle user_img_msg">
+	// 							</div>
+	// 						</div>`;
+	// 					$('#mess').append(temp);
+	// 				}
+	// 			})
+	// 		});
+	// 	}
+	// });
+	// $("input[name*='message']").keyup(function(e){
+	// 	if(e.key==="Enter"){
+	// 		e.preventDefault();
+	// 		sendMessage();
+	// 	}
+	// });
+	// function sendMessage(){
+	// 	$.ajax({
+	// 		url:'{{route('sendMessage')}}',
+	// 		type: 'post',
+	// 		data:{
+	// 			"_token": "{{ csrf_token() }}",
+	// 			"message" : $("input[name*='message']").val(),
+	// 		}
+	// 	}).done(result => {
+	// 		//console.log(result);
+	// 		$("input[name*='message']").val('');
+	// 		var temp = `
+	// 					<div class="d-flex justify-content-end mb-4">
+	// 							<div class="msg_cotainer_send" title="{{$user->name}}">
+	// 								${result.data.message}
+	// 								<span class="msg_time_send">${result.data.created_at}</span>
+	// 							</div>
+	// 							<div class="img_cont_msg">
+	// 						<img src="{{$user->avatar}}" class="rounded-circle user_img_msg">
+	// 							</div>
+	// 						</div>`;
+	// 		$('#mess').append(temp);
+	// 	});
+	// }
+	// var pusher = new Pusher("{{env('PUSHER_APP_KEY')}}", {
+	// 	  auth: {
+	// 	    params: {
+	// 	      'X-CSRF-Token': '{{csrf_token()}}'
+	// 	    }
+	// 	  },
+	// 	  cluster: '{{env('PUSHER_APP_CLUSTER')}}',
+	// 		encrypted: true
+	// 	  // authEndpoint: 'broadcasting/auth',
+	// 	});
+		// Pusher.logToConsole = true;
+		// var channel = pusher.subscribe('publicmess');
+		// console.log(channel);
+		// channel.bind('App\\Events\\Demo', function(data) {
+  //       	var temp = `
+		// 				<div class="d-flex justify-content-start mb-4">
+		// 						<div class="msg_cotainer_send" title="{{$user->name}}">
+		// 							${datamessage}
+		// 							<span class="msg_time_send"></span>
+		// 						</div>
+		// 						<div class="img_cont_msg">
+		// 					<img src="{{$user->avatar}}" class="rounded-circle user_img_msg">
+		// 						</div>
+		// 					</div>`;
+		// 	$('#mess').append(temp);
+  //   });
 		
-		</script>
+		</script> 
 @endsection

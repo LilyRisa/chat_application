@@ -19,7 +19,8 @@
 		@yield('head_style')
 	</head>
 	<body>
-		@yield('back')
-		@yield('body')
+			@yield('back')
+			@yield('body')
+		<script src="{{ mix('/js/app.js') }}"></script>
 	</body>
 </html>
