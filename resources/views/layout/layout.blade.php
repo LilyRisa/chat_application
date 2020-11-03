@@ -14,11 +14,15 @@
 		<script src="{{asset('js/jquery.min.js')}}"></script>
 		<script src="{{asset('js/notify.min.js')}}"></script>
 		<script src="{{asset('js/bootstrap-notify.min.js')}}"></script>
+		<script src="{{asset('js/bootstrap-filestyle.min.js')}}"></script>
 		<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 		<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 		@yield('head_style')
 	</head>
 	<body>
+		<script>
+			$(":file").filestyle({htmlIcon: '<i class="fa fa-paperclip" aria-hidden="true"></i>'});
+		</script>
 			@yield('back')
 			@yield('body')
 		<script src="{{ mix('/js/app.js') }}"></script>

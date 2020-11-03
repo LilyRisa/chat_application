@@ -35,4 +35,5 @@ Route::middleware(['checkuser'])->group(function(){
 
     	Route::get('/messages', ['as' => 'fetchMessages', 'uses' => 'RoomController@fetchMessages']);
 		Route::post('/messages', ['as' => 'sendMessage', 'uses' => 'RoomController@sendMessage']);
+    Route::get('/mess/{id}', ['as' => 'getidMessage', 'uses' => 'RoomController@getFile']);
 });

@@ -6,14 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
-class PublicMessenger extends Model
+class ChatPrivate extends Model
 {
     use HasFactory;
-    protected $table = 'messages';
-
+    protected $table = 'chat_private';
     public function user()
 	{
 	  return $this->belongsTo(User::class);
 	}
-	protected $fillable = ['message','type_mess'];
 }

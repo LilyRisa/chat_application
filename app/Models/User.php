@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\PublicMessenger;
+use App\Models\ChatPrivate;
 
 class User extends Authenticatable
 {
@@ -51,5 +52,9 @@ class User extends Authenticatable
     public function messages()
     {
       return $this->hasMany(PublicMessenger::class);
+    }
+    public function PrivateMessages()
+    {
+      return $this->hasMany(ChatPrivate::class);
     }
 }

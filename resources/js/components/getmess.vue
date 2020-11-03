@@ -2,12 +2,11 @@
 	<div v-if="usr.id != mess.user.id">
 		<div class="d-flex justify-content-start mb-4"> 
 			<div class="img_cont_msg">
-				<h6 class="usrname">{{ mess.user.name }}</h6>
-				<img :src="mess.user.avatar" class="rounded-circle user_img_msg">
+				<img :src="mess.user.avatar" :title="mess.user.name" class="rounded-circle user_img_msg">
 				
 			</div>
 			<div class="msg_cotainer">
-				{{ mess.message }}
+				<div v-html="mess.message"></div>
 				<span class="msg_time">{{ mess.created_at }}</span>
 			</div>
 		</div>
@@ -15,12 +14,11 @@
 	<div v-else>
 		<div class="d-flex justify-content-end mb-4"> 
 			<div class="msg_cotainer_send">
-				{{ mess.message }}
+				<div v-html="mess.message"></div>
 				<span class="msg_time">{{ mess.created_at }}</span>
 			</div>
 			<div class="img_cont_msg">
-				<h6 class="usrname">{{ mess.user.name }}</h6>
-				<img :src="mess.user.avatar" class="rounded-circle user_img_msg">
+				<img :src="mess.user.avatar" :title="mess.user.name" class="rounded-circle user_img_msg">
 			</div>
 			
 		</div>

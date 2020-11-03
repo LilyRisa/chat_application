@@ -16,7 +16,8 @@ class MessPublic extends Migration
         Schema::create('messages', function (Blueprint $table) {
           $table->increments('id');
           $table->integer('user_id')->unsigned();
-          $table->text('message');
+          $table->longText('message');
+          $table->text('type_mess');
           $table->timestamps();
         });
     }

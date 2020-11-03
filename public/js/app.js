@@ -1908,6 +1908,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _service_base64encoder_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../service/base64encoder.js */ "./resources/js/service/base64encoder.js");
 //
 //
 //
@@ -1920,6 +1921,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['user'],
   data: function data() {
@@ -1929,11 +1931,51 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     sendMessage: function sendMessage() {
-      this.$emit('MyEvent', {
+      this.$emit('sendmess', {
         user: this.user,
         message: this.newMessage
       });
       this.newMessage = '';
+    },
+    sendFile: function sendFile(fileList, fileSize) {
+      var _this = this;
+
+      fileList = fileList[0];
+
+      var bs64 = function bs64(file) {
+        return new Promise(function (resolve, reject) {
+          var reader = new FileReader();
+          reader.readAsDataURL(file);
+
+          reader.onload = function () {
+            return resolve(reader.result);
+          };
+
+          reader.onerror = function (error) {
+            return reject(error);
+          };
+        });
+      };
+
+      var image; // let base = new base64encoder();
+
+      bs64(fileList).then(function (data) {
+        if (fileList.type == 'image/gif' || fileList.type == 'image/jpeg' || fileList.type == 'image/png') {
+          image = {
+            data: data,
+            type: 'image'
+          };
+        } else {
+          image = {
+            data: data,
+            type: 'file'
+          };
+        }
+
+        _this.$emit('filesend', image);
+
+        image = null;
+      });
     }
   }
 });
@@ -1971,8 +2013,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -25756,7 +25796,29 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "input-group" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "input-group-append" }, [
+      _c("span", { staticClass: "input-group-text attach_btn" }, [
+        _c("input", {
+          staticClass: "filestyle",
+          attrs: {
+            type: "file",
+            name: "image_src",
+            id: "image_src",
+            "data-input": "false",
+            "data-iconName": "fas fa-paperclip",
+            "data-buttonText": ""
+          },
+          on: {
+            change: function($event) {
+              return _vm.sendFile(
+                $event.target.files,
+                $event.target.files.length
+              )
+            }
+          }
+        })
+      ])
+    ]),
     _vm._v(" "),
     _c("input", {
       directives: [
@@ -25801,18 +25863,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-append" }, [
-      _c("span", { staticClass: "input-group-text attach_btn" }, [
-        _c("i", { staticClass: "fas fa-paperclip" })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -25831,6 +25882,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
 var render = function() {
+  var chat_body = $('.msg_card_body');
+  setTimeout(function(){ 
+    chat_body.scrollTop(chat_body.prop('scrollHeight'));  
+  }, 
+  1000);  
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
@@ -25873,18 +25929,15 @@ var render = function() {
     ? _c("div", [
         _c("div", { staticClass: "d-flex justify-content-start mb-4" }, [
           _c("div", { staticClass: "img_cont_msg" }, [
-            _c("h6", { staticClass: "usrname" }, [
-              _vm._v(_vm._s(_vm.mess.user.name))
-            ]),
-            _vm._v(" "),
             _c("img", {
               staticClass: "rounded-circle user_img_msg",
-              attrs: { src: _vm.mess.user.avatar }
+              attrs: { src: _vm.mess.user.avatar, title: _vm.mess.user.name }
             })
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "msg_cotainer" }, [
-            _vm._v("\n\t\t\t" + _vm._s(_vm.mess.message) + "\n\t\t\t"),
+            _c("div", { domProps: { innerHTML: _vm._s(_vm.mess.message) } }),
+            _vm._v(" "),
             _c("span", { staticClass: "msg_time" }, [
               _vm._v(_vm._s(_vm.mess.created_at))
             ])
@@ -25894,20 +25947,17 @@ var render = function() {
     : _c("div", [
         _c("div", { staticClass: "d-flex justify-content-end mb-4" }, [
           _c("div", { staticClass: "msg_cotainer_send" }, [
-            _vm._v("\n\t\t\t" + _vm._s(_vm.mess.message) + "\n\t\t\t"),
+            _c("div", { domProps: { innerHTML: _vm._s(_vm.mess.message) } }),
+            _vm._v(" "),
             _c("span", { staticClass: "msg_time" }, [
               _vm._v(_vm._s(_vm.mess.created_at))
             ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "img_cont_msg" }, [
-            _c("h6", { staticClass: "usrname" }, [
-              _vm._v(_vm._s(_vm.mess.user.name))
-            ]),
-            _vm._v(" "),
             _c("img", {
               staticClass: "rounded-circle user_img_msg",
-              attrs: { src: _vm.mess.user.avatar }
+              attrs: { src: _vm.mess.user.avatar, title: _vm.mess.user.name }
             })
           ])
         ])
@@ -38097,46 +38147,77 @@ module.exports = function(module) {
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var _this2 = this;
-
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _service_base64encoder_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./service/base64encoder.js */ "./resources/js/service/base64encoder.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
 Vue.component('chat-messages', __webpack_require__(/*! ./components/ChatMesseges.vue */ "./resources/js/components/ChatMesseges.vue")["default"]);
 Vue.component('chat-form', __webpack_require__(/*! ./components/ChatForm.vue */ "./resources/js/components/ChatForm.vue")["default"]);
 Vue.component('get-mess', __webpack_require__(/*! ./components/getmess.vue */ "./resources/js/components/getmess.vue")["default"]);
 var app = new Vue({
   el: '#app',
   data: {
-    messages: []
+    messages: [],
+    file: []
   },
   created: function created() {
+    var _this = this;
+
     this.fetchMessages();
+    Echo["private"]('chatroom').listen('MyEvent', function (e) {
+      console.log(e);
+
+      if (e.message == null) {
+        axios.get('/mess/' + e.file).then(function (response) {
+          console.log(response.data);
+
+          _this.messages.push({
+            message: response.data.message.message,
+            created_at: response.data.message.created_at,
+            updated_at: response.data.message.updated_at,
+            user_id: response.data.message.user_id,
+            user: response.data.user
+          });
+        });
+      } else {
+        _this.messages.push({
+          message: e.message.message,
+          created_at: e.message.created_at,
+          updated_at: e.message.updated_at,
+          user_id: e.message.user_id,
+          user: e.user
+        });
+      }
+    });
   },
   methods: {
     fetchMessages: function fetchMessages() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get('/messages').then(function (response) {
-        _this.messages = response.data;
+        console.log(response.data);
+        _this2.messages = response.data;
       });
     },
     addMessage: function addMessage(message) {
       this.messages.push(message);
+      console.log(this.messages);
       axios.post('/messages', message).then(function (response) {
+        console.log(response.data);
+      });
+    },
+    FileUp: function FileUp(data) {
+      axios.post('/messages', data).then(function (response) {
         console.log(response.data);
       });
     }
   }
-});
-Echo["private"]('chatroom').listen('MyEvent', function (e) {
-  _this2.messages.push({
-    message: e.message.message,
-    user: e.user
-  });
 });
 
 /***/ }),
@@ -38170,7 +38251,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "8222b63dbe623187c323",
+  key: "61a5b7ef74389bcb42b8",
   cluster: "ap1",
   forceTLS: true
 });
@@ -38384,6 +38465,59 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/service/base64encoder.js":
+/*!***********************************************!*\
+  !*** ./resources/js/service/base64encoder.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return base64encoder; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var base64encoder = /*#__PURE__*/function () {
+  function base64encoder() {
+    _classCallCheck(this, base64encoder);
+  }
+
+  _createClass(base64encoder, [{
+    key: "set",
+    value: function set(file) {
+      this.file = file;
+    }
+  }, {
+    key: "encoder",
+    value: function encoder() {
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        var reader = new FileReader();
+        reader.readAsDataURL(_this.file);
+
+        reader.onload = function () {
+          return resolve(reader.result);
+        };
+
+        reader.onerror = function (error) {
+          return reject(error);
+        };
+      });
+    }
+  }]);
+
+  return base64encoder;
+}();
+
+
+
+/***/ }),
+
 /***/ 0:
 /*!***********************************************************!*\
   !*** multi ./resources/js/app.js ./resources/css/app.css ***!
@@ -38391,8 +38525,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\resources\css\app.css */"./resources/css/app.css");
+__webpack_require__(/*! C:\xampp\htdocs\application\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\application\resources\css\app.css */"./resources/css/app.css");
 
 
 /***/ })

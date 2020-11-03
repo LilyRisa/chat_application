@@ -17,15 +17,17 @@ class MyEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $user;
     public $message;
+    public $file;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-     public function __construct(User $user, PublicMessenger $message)
+     public function __construct(User $user, PublicMessenger $message = null, int $aa = null)
     {
         $this->user = $user;
         $this->message = $message;
+        $this->file = $aa;
     }
 
     /**

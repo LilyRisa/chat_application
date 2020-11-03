@@ -3,25 +3,22 @@
 	@include('layout.back')
 @endsection
 	@section('body')
-		<div class="container-fluid">
+		<div class="container-fluid" id="app">
 			<div class="row justify-content-center h-100">
 				
 				<div class="col-md-10 col-xl-10 chat">
 					<div class="card">
 						<div class="card-header msg_head">
 							<div class="d-flex bd-highlight">
-								<div class="img_cont">
-									<img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-									<span class="online_icon"></span>
-								</div>
+					
 								<div class="user_info">
-									<span>Chat with Khalid</span>
-									<p>1767 Messages</p>
+									<span>Chat with comunity</span>
+									<p>{{$count_mess}} Messages</p>
 								</div>
-								<div class="video_cam">
+								{{-- <div class="video_cam">
 									<span><i class="fas fa-video"></i></span>
 									<span><i class="fas fa-phone"></i></span>
-								</div>
+								</div> --}}
 							</div>
 							<span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
 							<div class="action_menu">
@@ -33,8 +30,8 @@
 								</ul>
 							</div>
 						</div>
-						<div id="app">
-						<div class="card-body msg_card_body" id="mess">
+					
+						<div class="card-body msg_card_body" style="scroll-behavior: smooth;">
 							<chat-messages :messages="messages" :user="{{ Auth::user() }}"></chat-messages>
 							
 						</div>
@@ -49,11 +46,11 @@
 						        </div>
 						    </div> --}}
 						    <chat-form
-                        v-on:messagesent="addMessage"
+                        v-on:sendmess="addMessage" v-on:filesend="FileUp"
                         :user="{{ Auth::user() }}"
                     ></chat-form>
 						</div>
-						</div>
+						
 					</div>
 				</div>
 				
